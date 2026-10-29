@@ -1,0 +1,184 @@
+{
+  "vocabularies": {
+    "tumour_evidence": [
+      "suspected_present",
+      "no_evidence_in_view",
+      "indeterminate",
+      "not_assessed",
+      "unassessable",
+      "not_applicable"
+    ],
+    "patterns_present": [
+      "lepidic",
+      "acinar",
+      "papillary",
+      "micropapillary",
+      "solid",
+      "complex_glandular",
+      "mucinous",
+      "other"
+    ],
+    "pattern_assessment_state": [
+      "assessed",
+      "indeterminate",
+      "not_assessed",
+      "unassessable",
+      "not_applicable"
+    ],
+    "components_present": [
+      "alveolar_structure",
+      "collapsed_alveoli_candidate",
+      "fibrous_stroma",
+      "inflammatory_aggregate",
+      "blood_vessel",
+      "airway",
+      "smooth_muscle",
+      "nerve_candidate",
+      "lymphoid_tissue",
+      "necrosis",
+      "mucin",
+      "other"
+    ],
+    "architecture_evidence": [
+      "along_wall",
+      "gland_forming",
+      "cell_nests",
+      "cell_sheets",
+      "fibrovascular_core_candidate",
+      "cribriform_candidate",
+      "fused_glands_candidate",
+      "other"
+    ],
+    "space_type": [
+      "gland_lumen",
+      "alveolar_airspace",
+      "vascular_lumen",
+      "airway_lumen",
+      "tissue_gap",
+      "indeterminate",
+      "not_assessed"
+    ],
+    "tumour_relative_location": [
+      "intratumour",
+      "tumour_nontumour_interface",
+      "extratumour",
+      "indeterminate",
+      "not_assessed"
+    ],
+    "boundary_type": [
+      "pattern_transition",
+      "epithelial_stromal",
+      "tumour_nontumour",
+      "vessel_stromal",
+      "airway_alveolar",
+      "tissue_edge",
+      "tissue_gap",
+      "indeterminate"
+    ],
+    "assessability": [
+      "adequate",
+      "limited",
+      "unassessable",
+      "not_assessed"
+    ],
+    "artifact_flags": [
+      "blur",
+      "fold",
+      "tear",
+      "crush",
+      "occlusion",
+      "padding",
+      "other"
+    ],
+    "uncertainty_level": [
+      "low",
+      "moderate",
+      "high",
+      "not_assessed"
+    ],
+    "special_focus_candidates": [
+      "STAS",
+      "LVI",
+      "VPI",
+      "invasion_boundary"
+    ],
+    "processing_state": [
+      "planned",
+      "draft",
+      "saved_pending_visual",
+      "ai_visually_verified"
+    ],
+    "visual_verification_state": [
+      "pending",
+      "matched",
+      "mismatch",
+      "unavailable"
+    ],
+    "slide_processing_state": [
+      "not_started",
+      "in_progress",
+      "completed_planned_sampling",
+      "deferred",
+      "unreadable"
+    ],
+    "physician_review_state": [
+      "not_reviewed",
+      "deferred",
+      "physician_reviewed",
+      "rejected",
+      "adjudicated_reference"
+    ],
+    "review_action": [
+      "accept",
+      "modify_label",
+      "modify_geometry",
+      "add_missed",
+      "reject",
+      "defer"
+    ],
+    "review_mode": [
+      "ai_assisted",
+      "blinded_independent",
+      "adjudication"
+    ],
+    "measurement_state": [
+      "observed",
+      "not_run",
+      "not_assessed",
+      "unassessable",
+      "not_applicable",
+      "indeterminate"
+    ],
+    "event_type": [
+      "view_observed",
+      "annotation_changed",
+      "save_succeeded",
+      "save_failed",
+      "reload_observed",
+      "visual_check",
+      "review_started",
+      "review_paused",
+      "review_resumed",
+      "review_completed",
+      "sampling_draw",
+      "sampling_replacement",
+      "technical_failure"
+    ],
+    "view_kind": [
+      "raw_crop",
+      "display_crop",
+      "viewport_screenshot",
+      "overlay_screenshot"
+    ],
+    "evidence_retention": [
+      "complete",
+      "incomplete"
+    ],
+    "label_origin": [
+      "pending",
+      "ai_candidate",
+      "physician_observation",
+      "adjudicated_reference"
+    ]
+  }
+}

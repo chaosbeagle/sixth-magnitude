@@ -1,0 +1,27 @@
+name: Checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.12']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install ".[test]"
+      - run: python -m pytest -q
+      - run: python scripts/check_plugin.py
+      - run: node --check sixth_magnitude/ui/inspect.js
+      - run: node --check sixth_magnitude/ui/agent.js
+      - run: node --check sixth_magnitude/ui/app.js
+      - run: python -m sixth_magnitude demo --run runs/ci-generic
+      - run: python -m sixth_magnitude demo --profile lung-pathology --run runs/ci-pathology

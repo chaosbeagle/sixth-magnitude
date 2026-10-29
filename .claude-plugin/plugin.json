@@ -1,0 +1,16 @@
+{
+  "name": "sixth-magnitude",
+  "version": "0.4.0",
+  "description": "Visual inspection with a reusable agent skill, local workbench, and whole-slide pathology examples.",
+  "author": {
+    "name": "Kuan Ting Wu"
+  },
+  "homepage": "https://github.com/chaosbeagle/sixth-magnitude",
+  "repository": "https://github.com/chaosbeagle/sixth-magnitude",
+  "license": "MIT",
+  "keywords": [
+    "computer-use",
+    "visual-inspection",
+    "pathology"
+  ]
+}

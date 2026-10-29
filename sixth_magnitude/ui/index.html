@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sixth Magnitude · Review</title>
+<link rel="stylesheet" href="/vendor/annotorious.css"><link rel="stylesheet" href="/app.css"></head>
+<body>
+<header><a class="brand" href="/"><span class="star">✧</span><strong>Sixth Magnitude</strong></a><span class="workspace-name">Detailed review</span>
+<div id="run-badge" class="badge">Loading…</div><details class="operator"><summary>Operator</summary><div><label for="role">Role</label><select id="role"><option value="ai">AI annotator</option><option value="physician">Physician</option><option value="engineering">Demo / test</option></select><label for="actor">Operator ID</label><input id="actor" aria-label="Operator ID" value="ai-operator" size="18"></div></details></header>
+<main>
+<aside class="queue"><div class="section-heading">Slides <button id="refresh" title="Reload saved state" aria-label="Reload saved state">↻</button></div><div id="cases"></div>
+<div class="section-heading">Regions <span id="roi-count"></span></div><div id="regions"></div>
+<details class="planned-locations"><summary>Planned locations</summary><div id="plans"></div></details>
+<div class="queue-actions"><button id="finish">Finish planned sampling</button><button id="next-case">Next slide</button><button id="export">Export results</button><details><summary>Session details</summary><button id="usage">Show usage</button><div id="export-result"></div></details></div></aside>
+<section class="workspace">
+<div class="toolbar"><span id="case-name">Select a slide</span><span id="source-badge"></span><div class="spacer"></div><button id="home">Whole slide</button><button data-fov="4096">4 mm</button><button data-fov="2048">2 mm</button><button data-fov="512">512 µm</button><button data-fov="256">256 µm</button></div>
+<div id="viewer"><div id="viewer-loading">Loading slide…</div></div>
+<div class="geometry-controls"><button id="new">New region</button><button id="center">Center region</button><button id="polygon">Draw polygon</button><label for="geometry-role">Type</label><select id="geometry-role"><option value="sampling_window">Sampling window</option><option value="tissue_region">Tissue region</option><option value="quality_region">Quality region</option></select></div>
+<details class="geometry-details"><summary>Geometry <span id="geometry-status"></span></summary><div class="geometry-fields"><label>Center X<input id="cx" type="number" step="any"></label><label>Center Y<input id="cy" type="number" step="any"></label><label>Width · µm<input id="width" type="number" min="1" step="any" value="512"></label><label>Height · µm<input id="height" type="number" min="1" step="any" value="512"></label><label>Context · µm<input id="context-side" type="number" min="1" step="any" value="2048"></label><button id="apply-geometry">Apply</button></div><div class="view-hint" id="measurement-info"></div></details>
+<div class="evidence-grid"><figure><figcaption><b>Focus</b><span id="focus-scale"></span><button id="focus-raw">Original</button></figcaption><a id="focus-link" target="_blank" rel="noopener"><img id="focus-image" alt="Focus view with saved outline" hidden></a></figure>
+<figure><figcaption><b>Context</b><span id="context-scale"></span><button id="context-raw">Original</button></figcaption><a id="context-link" target="_blank" rel="noopener"><img id="context-image" alt="Surrounding view with the focus outlined" hidden></a></figure></div>
+</section>
+<aside class="observation-panel"><div class="panel-heading"><strong>Observation</strong><span id="saved-state" class="badge">Unsaved</span></div>
+<label for="annotation-label">Region label</label><input id="annotation-label" placeholder="Name the visible finding">
+<div class="tabbar" role="tablist"><button data-tab="focus" class="active">Focus</button><button data-tab="context">Context</button><button data-tab="relationship">Spatial</button><button data-tab="quality">Quality</button><button data-tab="special">Events</button></div>
+<div id="forms"></div>
+<details class="json-editor"><summary>Structured input</summary><textarea id="json-input" aria-label="Observation JSON" spellcheck="false" placeholder="Paste all or part of an observation"></textarea><div><button id="load-json">Apply JSON</button><button id="copy-json">Load current</button><a href="/schema.json" target="_blank">Schema</a></div></details>
+<div class="save-actions"><button id="save" class="primary">Save observation</button><button id="visual" disabled>Confirm saved overlay</button><div id="review-controls" hidden><button id="review-timer">Start review timer</button><button id="accept">Accept observation</button><button id="defer">Defer</button><button id="reject">Reject observation</button></div><button id="delete" class="subtle">Remove region</button><p id="review-state">Awaiting review</p></div></aside>
+</main>
+<footer role="status" aria-live="polite"><span class="status-dot"></span><span id="status">Loading…</span></footer>
+<script src="/vendor/openseadragon.min.js"></script><script src="/vendor/annotorious.js"></script><script src="/app.js"></script>
+</body></html>

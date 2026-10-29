@@ -1,0 +1,2 @@
+asset_id,path,reader,mpp_x,mpp_y
+surface_a,../data/surface.png,raster,,

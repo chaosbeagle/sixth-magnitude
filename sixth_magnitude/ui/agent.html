@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sixth Magnitude · Pathology</title><link rel="stylesheet" href="/agent.css"></head>
+<body>
+<header><a class="brand" href="/">✧ <strong>Sixth Magnitude</strong></a><span class="workspace-name">Pathology</span><span id="run"></span><a class="review-link" href="/review" target="_blank" rel="noopener">Detailed review ↗</a><button id="export">Export results</button></header>
+<nav><label>Slide <input id="case" size="14" aria-label="Slide ID"></label><button id="open">Open</button><button id="next-case">Next slide</button><span id="progress"></span><details class="operator-settings"><summary>Operator</summary><div><label>Role <select id="role" aria-label="Operator role"><option value="ai">AI annotator</option><option value="engineering">Demo / test</option><option value="physician">Physician</option></select></label><label>Operator ID<input id="actor" size="20" placeholder="Your ID" aria-label="Operator ID"></label></div></details></nav>
+<main>
+<section id="workspace"><div class="toolbar"><button id="overview">Whole slide</button><button id="back">Back</button><label>Cell <select id="cell" aria-label="Cell"></select></label><button id="zoom">Zoom in</button><button id="pending">Next unresolved</button><label class="toggle"><input id="overlays" type="checkbox" checked>Annotations</label><span id="scale"></span></div>
+<div id="frame"><div id="plane"><img id="image" alt="Slide view with saved annotations"><svg id="overlay" aria-label="Select a cell or draw a region"></svg></div></div>
+<div id="view-note">Click to select a cell. Double-click to zoom.</div>
+<div id="metrics" aria-live="polite"></div></section>
+<aside>
+<div class="section-heading">Annotate regions</div>
+<label for="labels">Cell labels</label><textarea id="labels" rows="2" placeholder="A:A1,A2; S:B1; ?:C3" spellcheck="false"></textarea><button id="save-cells" class="primary">Save cell labels</button><p id="selection">No regions selected</p><button id="visual" disabled>Confirm saved overlay</button>
+<details id="legend"><summary>Pattern key</summary><div class="pattern-key"><span><b>L</b> Lepidic</span><span><b>A</b> Acinar</span><span><b>P</b> Papillary</span><span><b>M</b> Micropapillary</span><span><b>S</b> Solid</span><span><b>C</b> Complex glandular</span><span><b>T</b> Tumour envelope</span><span><b>?</b> Unresolved</span><span><b>X</b> Excluded</span><span><b>B</b> Unclear boundary</span></div><p>Use whole cells for uniform regions. Zoom in or draw a polygon for mixed tissue.</p></details>
+<div class="separator"></div>
+<div class="row region-tools"><label>Region type <select id="code" aria-label="Region type"></select></label><button id="draw">Draw polygon</button></div><div class="row"><button id="undo">Undo point</button><button id="clear">Clear draft</button><button id="save-polygon">Save polygon</button></div>
+<details id="envelope"><summary>Coverage and applicability</summary><div><label><input id="complete" type="checkbox">All tumour on this slide is outlined</label><label><input id="boundary" type="checkbox">Tumour boundary is assessable</label><label>Pattern dictionary <select id="applicability" aria-label="Pattern dictionary applicability"><option value="not_assessed">Not assessed</option><option value="nonmucinous_luad">Nonmucinous lung adenocarcinoma</option><option value="not_applicable">Not applicable</option></select></label></div></details>
+<div class="separator"></div>
+<label for="region">Saved regions in this view</label><select id="region" aria-label="Saved region"></select><div class="row"><button id="edit">Edit region</button><button id="delete">Remove</button></div>
+<button id="select-visible">Select regions for confirmation</button><div id="physician" hidden><button id="timer">Start review timer</button><button id="accept">Accept selected</button><button id="reject">Reject selected</button></div>
+<button id="retry" hidden>Retry pending save</button>
+</aside></main>
+<footer id="status" role="status">Loading…</footer><script src="/agent.js"></script></body></html>

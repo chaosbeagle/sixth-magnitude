@@ -1,0 +1,14 @@
+{
+  "name": "sixth-magnitude",
+  "description": "Sixth Magnitude visual inspection skill and local workbench.",
+  "owner": {
+    "name": "Kuan Ting Wu"
+  },
+  "plugins": [
+    {
+      "name": "sixth-magnitude",
+      "source": "./",
+      "description": "Visual inspection with a reusable agent skill, local workbench, and whole-slide pathology examples."
+    }
+  ]
+}

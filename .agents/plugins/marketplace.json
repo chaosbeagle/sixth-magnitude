@@ -1,0 +1,20 @@
+{
+  "name": "sixth-magnitude",
+  "interface": {
+    "displayName": "Sixth Magnitude"
+  },
+  "plugins": [
+    {
+      "name": "sixth-magnitude",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
