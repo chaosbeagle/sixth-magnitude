@@ -26,28 +26,6 @@ claude plugin install sesta@sixth-magnitude
 
 Start a new Claude Code session. Invoke `/sesta:inspect`, followed by your task. A natural-language request to use Sesta Workbench also lets the host select the skill.
 
-## Migrate an earlier installation
-
-If you installed the former `sixth-magnitude` plugin, refresh the marketplace and install Sesta before removing the old plugin. Your workspaces and Python commands remain compatible.
-
-Codex:
-
-```sh
-codex plugin marketplace upgrade sixth-magnitude
-codex plugin add sesta@sixth-magnitude
-codex plugin remove sixth-magnitude@sixth-magnitude
-```
-
-Claude Code:
-
-```sh
-claude plugin marketplace update sixth-magnitude
-claude plugin install sesta@sixth-magnitude
-claude plugin uninstall sixth-magnitude@sixth-magnitude --keep-data
-```
-
-The marketplace and GitHub repository remain `sixth-magnitude`. The plugin is `sesta`; the skill is `inspect`. Python imports and existing `python -m sixth_magnitude` commands are unchanged.
-
 ## First workspace
 
 After installing, ask the agent:
