@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sixth-magnitude"
-version = "0.4.0"
-description = "Evidence-linked visual inspection with a reusable agent workflow and a pathology workbench"
+version = "0.5.0"
+description = "Sesta Workbench: visual inspection with a reusable agent skill and pathology examples"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

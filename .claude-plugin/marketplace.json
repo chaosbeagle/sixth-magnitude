@@ -1,12 +1,12 @@
 {
   "name": "sixth-magnitude",
-  "description": "Sixth Magnitude visual inspection skill and local workbench.",
+  "description": "Sesta Workbench, built on the Sixth Magnitude visual inspection framework.",
   "owner": {
     "name": "Kuan Ting Wu"
   },
   "plugins": [
     {
-      "name": "sixth-magnitude",
+      "name": "sesta",
       "source": "./",
       "description": "Visual inspection with a reusable agent skill, local workbench, and whole-slide pathology examples."
     }

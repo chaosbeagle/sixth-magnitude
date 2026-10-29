@@ -10,7 +10,7 @@ def read(name):
 portable = read('plugin.json')
 version = re.search(r'^version = "([^"]+)"', (root / 'pyproject.toml').read_text(), re.M).group(1)
 for manifest in [portable, read('.codex-plugin/plugin.json'), read('.claude-plugin/plugin.json')]:
-    assert manifest['name'] == 'sixth-magnitude'
+    assert manifest['name'] == 'sesta'
     assert manifest['version'] == version
     assert manifest['license'] == 'MIT'
     assert manifest['repository'] == 'https://github.com/chaosbeagle/sixth-magnitude'
@@ -27,9 +27,9 @@ for marketplace in ('.agents/plugins/marketplace.json', '.claude-plugin/marketpl
     assert path == './'
     assert (root / path / 'pyproject.toml').is_file()
 assert read('.codex-plugin/plugin.json')['skills'] == './skills/'
-skill = root / 'skills/sixth-magnitude/SKILL.md'
+skill = root / 'skills/inspect/SKILL.md'
 assert skill.read_bytes() == (root / 'sixth_magnitude/skill/SKILL.md').read_bytes()
-assert skill.read_text().startswith('---\nname: sixth-magnitude\n')
+assert skill.read_text().startswith('---\nname: inspect\n')
 assert 'Copyright (c) 2026 Kuan Ting Wu' in (root / 'LICENSE.md').read_text()
 assert (root / 'docs/plugins.md').is_file()
 print('Plugin metadata, marketplace roots, shared skill, workbench and MIT notice: PASS')

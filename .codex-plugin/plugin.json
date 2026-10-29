@@ -1,7 +1,7 @@
 {
-  "name": "sixth-magnitude",
-  "version": "0.4.0",
-  "description": "Visual inspection with a reusable agent skill, local workbench, and whole-slide pathology examples.",
+  "name": "sesta",
+  "version": "0.5.0",
+  "description": "Sesta Workbench: inspect images, save regions with evidence, and verify overlays with an agent.",
   "author": {
     "name": "Kuan Ting Wu"
   },
@@ -15,7 +15,7 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Sixth Magnitude",
+    "displayName": "Sesta Workbench",
     "shortDescription": "Inspect images and keep findings linked to evidence",
     "developerName": "Kuan Ting Wu",
     "category": "Productivity",
@@ -24,8 +24,8 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Set up a Sixth Magnitude demo in this workspace.",
-      "Inspect images with Sixth Magnitude and verify the saved overlays."
+      "Use Sesta Workbench to set up an inspection demo in this workspace.",
+      "Use Sesta Workbench to inspect images and verify saved overlays."
     ]
   }
 }

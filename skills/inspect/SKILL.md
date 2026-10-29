@@ -1,9 +1,9 @@
 ---
-name: sixth-magnitude
-description: Set up the Sixth Magnitude workbench or inspect images in the Sixth Magnitude workbench, save findings with regions and image evidence, check the saved overlays, and resume unfinished work.
+name: inspect
+description: Set up Sesta Workbench, inspect images at multiple scales, save regions with evidence, verify overlays, and resume unfinished inspections.
 ---
 
-# Sixth Magnitude
+# Inspect with Sesta Workbench
 
 Use the workspace path and viewer URL supplied with the task. `python -m sixth_magnitude status --run RUN` shows the queue; `brief --run RUN --asset-id ID` summarizes one image. Reopen an existing workspace to continue.
 

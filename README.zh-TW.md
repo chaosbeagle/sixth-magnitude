@@ -1,10 +1,10 @@
-# 六等星
+# 六等星工作台
 
 [English](README.md)
 
 讓具備視覺能力的智能體，透過工具完成影像檢查。
 
-六等星是一套為前沿視覺模型設計的通用檢查框架，適合搭配 Codex、Claude Code 這類智能體環境使用。給智能體一個任務與影像工作區，它就能在全貌與細節之間切換、標記區域、描述所見，並回到畫面核對結果。每筆觀察都連同影像與座標保存，之後可以重新開啟、修正或匯出。
+六等星工作台（Sesta Workbench）以 Sixth Magnitude 框架為基礎，為前沿視覺模型提供通用影像檢查環境，適合搭配 Codex、Claude Code 這類智能體環境使用。給智能體一個任務與影像工作區，它就能在全貌與細節之間切換、標記區域、描述所見，並回到畫面核對結果。每筆觀察都連同影像與座標保存，之後可以重新開啟、修正或匯出。
 
 框架結合簡短的操作技能、本機視覺工作台與 Python 工具，使用智能體環境既有的電腦操作和程式執行能力。模型負責視覺判斷，工具處理座標、影像擷取、量測與儲存。不同任務的知識可以寫進指引，沿用同一套操作與保存流程。
 
@@ -12,7 +12,9 @@
 
 ![六等星視覺檢查流程](docs/images/overview.png)
 
-## 為什麼叫「六等星」？
+## Sesta 與「六等星」的由來
+
+Sesta 取自義大利文「第六」的陰性形式（[Treccani 詞典](https://www.treccani.it/vocabolario/sesta1/)）。產品名稱為 **Sesta Workbench／六等星工作台**；Sixth Magnitude 保留為框架名稱與天文意象。Plugin 使用短名 `sesta`，操作技能為 `inspect`。
 
 這個名字起於 Astra 的 `low` 推理設定。在專案最初使用的設定中，從最高推理量往下數，`low` 正好排在第六級，於是有了天文上的聯想：六等星接近[黑暗天空下肉眼可見的極限](https://science.nasa.gov/solar-system/skywatching/night-sky-network/check-your-sky-quality-with-orion/)。
 
@@ -41,17 +43,17 @@ Codex：
 
 ```sh
 codex plugin marketplace add chaosbeagle/sixth-magnitude
-codex plugin add sixth-magnitude@sixth-magnitude
+codex plugin add sesta@sixth-magnitude
 ```
 
 Claude Code：
 
 ```sh
 claude plugin marketplace add chaosbeagle/sixth-magnitude
-claude plugin install sixth-magnitude@sixth-magnitude
+claude plugin install sesta@sixth-magnitude
 ```
 
-重新開啟對話，請智能體「**使用六等星，在目前工作目錄建立影像檢查示範**」。Claude Code 也可使用 `/sixth-magnitude:sixth-magnitude`。Plugin 包含技能與工作台；首次設定時，智能體會將 Python 相依套件安裝到工作環境。[安裝與首次使用指南](docs/plugins.md)。
+重新開啟對話，請智能體「**使用六等星工作台，在目前工作目錄建立影像檢查示範**」。Claude Code 也可使用 `/sesta:inspect`。Plugin 包含技能與工作台；首次設定時，智能體會將 Python 相依套件安裝到工作環境。[安裝與首次使用指南](docs/plugins.md)。
 
 ## 試用工作台
 
@@ -77,7 +79,7 @@ python -m sixth_magnitude serve --run runs/surface --port 8790
 
 ## 交給智能體操作
 
-在智能體環境中載入[六等星技能](sixth_magnitude/skill/SKILL.md)，提供工作區路徑、瀏覽器網址與任務。例如：
+在智能體環境中載入[Sesta 的 inspect 技能](sixth_magnitude/skill/SKILL.md)，提供工作區路徑、瀏覽器網址與任務。例如：
 
 > 檢查這張表面影像中的可見缺陷。為每個發現圈出區域並寫下簡短描述，保存後核對疊圖；不確定的部分保留待複核。
 
@@ -142,7 +144,7 @@ python -m sixth_magnitude export --run runs/my-inspection
 
 病理範例供研究與工作流程開發使用。候選觀察在臨床使用前需要專家複核，專案尚未經過臨床驗證。本機伺服器請維持使用回送位址；介面中的角色用於標記操作，不具備使用者身分驗證功能。
 
-六等星是獨立專案。文中模型與智能體產品名稱用於指明討論的系統，不代表供應商背書。
+六等星工作台是獨立專案。文中模型與智能體產品名稱用於指明討論的系統，不代表供應商背書。
 
 ## 授權
 

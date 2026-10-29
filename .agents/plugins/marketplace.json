@@ -1,11 +1,11 @@
 {
   "name": "sixth-magnitude",
   "interface": {
-    "displayName": "Sixth Magnitude"
+    "displayName": "Sesta Workbench"
   },
   "plugins": [
     {
-      "name": "sixth-magnitude",
+      "name": "sesta",
       "source": {
         "source": "local",
         "path": "./"

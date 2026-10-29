@@ -194,6 +194,6 @@ class Handler(BaseHTTPRequestHandler):
 
 def serve(root, port):
     with Server(root,port) as server:
-        print(f"六等星框架 http://127.0.0.1:{server.server_port}/",flush=True)
+        print(f"Sesta Workbench http://127.0.0.1:{server.server_port}/",flush=True)
         print(f"Run: {server.store.root}",flush=True)
         server.serve_forever()

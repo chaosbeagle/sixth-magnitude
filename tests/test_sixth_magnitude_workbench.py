@@ -225,7 +225,7 @@ def test_http_workbench_and_lazy_native_evidence_keep_saved_binding(workbench,mo
         try:
             conn=http.client.HTTPConnection('127.0.0.1',server.server_port)
             conn.request('GET','/');r=conn.getresponse();page=r.read()
-            assert r.status==200 and b'Sixth Magnitude' in page and b'id="save-cells"' in page and b'id="visual"' in page
+            assert r.status==200 and b'Sesta Workbench' in page and b'id="save-cells"' in page and b'id="visual"' in page
             conn.request('GET','/api/evidence/'+a['evidence_id']);r=conn.getresponse();body=json.loads(r.read())
             assert r.status==200 and body['evidence_id']==a['evidence_id'] and body['render_evidence_id']==native_id
             payload=dict(req(labels='S:A2'),case_id='C1',actor=actor)

@@ -1,10 +1,10 @@
-# Sixth Magnitude
+# Sesta Workbench
 
 [繁體中文](README.zh-TW.md)
 
 A visual inspection framework for agents that can see and use tools.
 
-Sixth Magnitude is designed for frontier vision models working inside agent environments such as Codex and Claude Code. Give an agent a task and an image workspace. It can move between an overview and fine detail, mark a region, describe what it sees, and check the result on screen. Each saved observation stays attached to its image and coordinates, ready to reopen, correct, or export.
+Sesta Workbench implements the Sixth Magnitude visual inspection framework for frontier vision models working inside agent environments such as Codex and Claude Code. Give an agent a task and an image workspace. It can move between an overview and fine detail, mark a region, describe what it sees, and check the result on screen. Each saved observation stays attached to its image and coordinates, ready to reopen, correct, or export.
 
 The project combines a short skill, a local visual workbench, and Python tools. It uses the host agent's computer-use and coding capabilities: the model handles visual judgment, while the tools handle coordinates, image extraction, measurements, and storage. Task instructions can carry domain knowledge into the workflow without rebuilding the surrounding machinery for every task.
 
@@ -12,7 +12,9 @@ Pathology is the first worked example. Whole-slide images make the workflow conc
 
 ![Sixth Magnitude inspection workflow](docs/images/overview.png)
 
-## Why “Sixth Magnitude”?
+## Sesta and the Sixth Magnitude framework
+
+*Sesta* comes from the Italian feminine form of “sixth” ([Treccani](https://www.treccani.it/vocabolario/sesta1/)). Sesta Workbench is the short product name; Sixth Magnitude names the framework and its astronomical inspiration. The plugin is `sesta`, and its inspection skill is `inspect`.
 
 The name began with Astra running at `low` reasoning effort. Among the settings used when the project started, `low` was sixth when counted down from the highest level. That suggested an astronomical name: sixth-magnitude stars lie near the [limit of unaided vision under a dark sky](https://science.nasa.gov/solar-system/skywatching/night-sky-network/check-your-sky-quality-with-orion/).
 
@@ -41,17 +43,17 @@ For Codex:
 
 ```sh
 codex plugin marketplace add chaosbeagle/sixth-magnitude
-codex plugin add sixth-magnitude@sixth-magnitude
+codex plugin add sesta@sixth-magnitude
 ```
 
 For Claude Code:
 
 ```sh
 claude plugin marketplace add chaosbeagle/sixth-magnitude
-claude plugin install sixth-magnitude@sixth-magnitude
+claude plugin install sesta@sixth-magnitude
 ```
 
-Start a new session and ask the agent to **use Sixth Magnitude to set up an inspection demo in this workspace**. In Claude Code, you can also invoke `/sixth-magnitude:sixth-magnitude`. The plugin bundles the skill and workbench; the setup task installs Python dependencies in your working environment. [Installation and first-workspace guide](docs/plugins.md).
+Start a new session and ask the agent to **use Sesta Workbench to set up an inspection demo in this workspace**. In Claude Code, you can also invoke `/sesta:inspect`. The plugin bundles the skill and workbench; the setup task installs Python dependencies in your working environment. [Installation and first-workspace guide](docs/plugins.md).
 
 ## Try the workbench
 
@@ -77,7 +79,7 @@ The sample workspace keeps its observations separate from reviewed results.
 
 ## Work with an agent
 
-Load the [Sixth Magnitude skill](sixth_magnitude/skill/SKILL.md) in your agent environment. Give the agent the workspace path, viewer URL, and task. For example:
+Load the [Sesta inspect skill](sixth_magnitude/skill/SKILL.md) in your agent environment. Give the agent the workspace path, viewer URL, and task. For example:
 
 > Inspect the marked surface for visible defects. Save each finding with a region and a short description. Check the saved overlays and leave uncertain findings for review.
 
@@ -142,7 +144,7 @@ The workbench stores images and observations locally. When an agent uses a cloud
 
 The pathology examples support research and workflow development. Candidate observations need expert review before clinical use; the project has not been clinically validated. Keep the local server on the loopback address. Interface roles label actions and are not user authentication.
 
-Sixth Magnitude is an independent project. Model and agent product names identify the systems discussed and do not imply vendor endorsement.
+Sesta Workbench is an independent project. Model and agent product names identify the systems discussed and do not imply vendor endorsement.
 
 ## License
 

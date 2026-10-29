@@ -8,4 +8,4 @@ Keep domain terms in their profiles and domain modules. Preserve uncertainty and
 
 Contributions to project code are made under the [MIT license](LICENSE.md). Preserve third-party notices and image credits.
 
-The plugin skill in `skills/sixth-magnitude/SKILL.md` mirrors the Python package skill. Update both together and run `python scripts/check_plugin.py` before publishing.
+The plugin skill in `skills/inspect/SKILL.md` mirrors the Python package skill. Update both together and run `python scripts/check_plugin.py` before publishing.
