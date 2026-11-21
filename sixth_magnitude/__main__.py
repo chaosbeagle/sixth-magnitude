@@ -1,2 +1,2 @@
-from .cli import main
+from .hybrid_entry import main
 main()

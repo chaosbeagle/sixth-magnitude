@@ -1,6 +1,6 @@
 {
   "name": "sixth-magnitude",
-  "description": "Sesta Workbench, built on the Sixth Magnitude visual inspection framework.",
+  "description": "Sesta Workbench, an image inspection framework for agents.",
   "owner": {
     "name": "Kuan Ting Wu"
   },

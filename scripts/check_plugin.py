@@ -26,6 +26,10 @@ for marketplace in ('.agents/plugins/marketplace.json', '.claude-plugin/marketpl
     path = source['path'] if isinstance(source, dict) else source
     assert path == './'
     assert (root / path / 'pyproject.toml').is_file()
+assert portable['extensions']['com.openai']['interface']['displayName'] == 'Sesta Workbench'
+assert read('.codex-plugin/plugin.json')['interface']['displayName'] == 'Sesta Workbench'
+assert read('.claude-plugin/plugin.json')['displayName'] == 'Sesta Workbench'
+assert read('.agents/plugins/marketplace.json')['interface']['displayName'] == 'Sesta Workbench'
 assert read('.codex-plugin/plugin.json')['skills'] == './skills/'
 skill = root / 'skills/inspect/SKILL.md'
 assert skill.read_bytes() == (root / 'sixth_magnitude/skill/SKILL.md').read_bytes()

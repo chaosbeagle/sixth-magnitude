@@ -1,151 +1,58 @@
 # Sesta Workbench
 
-[繁體中文](README.zh-TW.md)
+Sesta gives a vision model a place to inspect an image, mark what it sees and check the result against the source. An agent can move from a whole-slide overview to a single nucleus, save an observation at its original coordinates and reopen it for review. The local viewer works with Codex and Claude Code. The nuclear review workflow in this release uses GPT-6.2 Astra at low reasoning effort and Fast speed in Codex.
 
-A visual inspection framework for agents that can see and use tools.
+Version 2 adds a pathology toolbox and direct mask editing. The operator can separate touching nuclei with watershed, recover faint objects, remove debris, combine candidate masks in a region or draw an outline on the original pixel grid. The image stays available throughout the review.
 
-Sesta Workbench implements the Sixth Magnitude visual inspection framework for frontier vision models working inside agent environments such as Codex and Claude Code. Give an agent a task and an image workspace. It can move between an overview and fine detail, mark a region, describe what it sees, and check the result on screen. Each saved observation stays attached to its image and coordinates, ready to reopen, correct, or export.
+![Breast field H08: original H&E, the shared StarDist mask, Sesta and Sol predictions, and human reference contours](docs/gallery/h08-start-final.png)
 
-The project combines a short skill, a local visual workbench, and Python tools. It uses the host agent's computer-use and coding capabilities: the model handles visual judgment, while the tools handle coordinates, image extraction, measurements, and storage. Task instructions can carry domain knowledge into the workflow without rebuilding the surrounding machinery for every task.
+Both workbenches started from the same StarDist mask on this breast field. Its instance F1 was **0.833** against the human outlines. Sesta’s edits reached **0.933** and Sol’s reached **0.632**. [Field notes and image credits](docs/gallery/README.md#one-starting-mask-two-edits)
 
-Pathology is the first worked example. Whole-slide images make the workflow concrete: examine tissue at several scales, keep a selected region in context, and leave observations that a pathologist can inspect and revise. The general workbench also accepts ordinary images; the lung pathology profile adds its own vocabulary and measurements.
+## Choose how to review nuclei
 
-![Sixth Magnitude inspection workflow](docs/images/overview.png)
+| Mode | What the model does |
+|---|---|
+| **Tool-guided** | Inspect candidate overlays, select contours and combine local corrections. |
+| **Model-guided** | Start with an empty mask, then draw or write image-processing code. |
+| **Hybrid** | An independent reviewer chooses a starting mask for each field. The operator can switch tools, draw and revise. |
 
-## Sesta and the Sixth Magnitude framework
+Before saving a hybrid result, the operator compares the raw image, initial contours and latest edit side by side. It selects which contours to keep and assigns cell types to those instances. A run saves the masks, choices and token usage.
 
-*Sesta* comes from the Italian feminine form of “sixth” ([Treccani](https://www.treccani.it/vocabolario/sesta1/)). Sesta Workbench is the short product name; Sixth Magnitude names the framework and its astronomical inspiration. The plugin is `sesta`, and its inspection skill is `inspect`.
+## Try it
 
-The name began with Astra running at `low` reasoning effort. Among the settings used when the project started, `low` was sixth when counted down from the highest level. That suggested an astronomical name: sixth-magnitude stars lie near the [limit of unaided vision under a dark sky](https://science.nasa.gov/solar-system/skywatching/night-sky-network/check-your-sky-quality-with-orion/).
-
-The image behind the name is a star chart assembled from many faint points. In the original pathology workflow, those points were candidate annotations: small observations with known locations, which a physician could check and correct. The framework gives them a place to accumulate and makes it possible to return to the evidence behind each one.
-
-The project asks how much useful visual work a capable model can do with modest reasoning effort, clear instructions, and tools that take care of repetitive work. Astra `low` supplied the name; the skill and workbench can be used with other models and reasoning settings.
-
-## Why start with Astra low?
-
-The project began with an observation: GPT-6 Astra retains strong general visual capabilities even at `low` thinking effort. Published evaluations give that observation a concrete basis. On Artificial Analysis's MMMU-Pro evaluation of multimodal academic reasoning, Astra `low` scores above the previous GPT-5.6 Sol at both `high` and `max`:
-
-| Model | Thinking effort | MMMU-Pro |
-| --- | --- | ---: |
-| [GPT-5.6 Sol](https://artificialanalysis.ai/models/gpt-5-6-sol-high) | high | 81.8% |
-| [GPT-5.6 Sol](https://artificialanalysis.ai/models/gpt-5-6-sol) | max | 83.4% |
-| [GPT-6 Astra](https://artificialanalysis.ai/models/gpt-6-astra-low) | low | **84.6%** |
-| [GPT-6 Astra](https://artificialanalysis.ai/models/gpt-6-astra) | max | 86.9% |
-
-OpenAI also reports gains over Sol in screen targeting and computer use: **92.7% vs. 76.9%** on ScreenSpot-Pro, and **72.6% vs. 65.7%** on the OSWorld 2.0 offline partial score. These are the launch report's best results across effort settings, not scores specifically for `low`. [Source and evaluation settings](https://openai.com/index/gpt-6-astra/).
-
-This motivates the framework: give a visually capable model a workspace where it can act on what it sees, inspect the consequences, and leave usable evidence. The benchmarks inform that design; the WSI demo shows the workflow in practice. It is not a diagnostic accuracy study. [Benchmark details and further reading](docs/benchmarks.md).
-
-## Install in your agent
-
-For Codex:
+With Python 3.10 or later, run the following from this repository to open the practice viewer at `http://127.0.0.1:8790`.
 
 ```sh
-codex plugin marketplace add chaosbeagle/sixth-magnitude
-codex plugin add sesta@sixth-magnitude
+python -m pip install ./packages/pathology-tools .
+python -m sixth_magnitude demo --run runs/demo
+python -m sixth_magnitude serve --run runs/demo --port 8790
 ```
 
-For Claude Code:
+For a nuclear review, register your H&E image in a workspace. A minimal `slides.csv` has the header `asset_id,path` and a row such as `sample,field.png`. This example takes the upper-left 256 × 256 pixels of the registered image and uses a signed-in Codex CLI for inference.
 
 ```sh
-claude plugin marketplace add chaosbeagle/sixth-magnitude
-claude plugin install sesta@sixth-magnitude
+sixth-magnitude init --manifest slides.csv --run runs/slides
+sixth-magnitude toolbox prepare --run runs/slides --asset-id sample --roi 0 0 256 256 --field runs/fields/F01
+sixth-magnitude workbench --mode hybrid --fields runs/fields/F01 --output runs/review
 ```
 
-Start a new session and ask the agent to **use Sesta Workbench to set up an inspection demo in this workspace**. In Claude Code, you can also invoke `/sesta:inspect`. The plugin bundles the skill and workbench; the setup task installs Python dependencies in your working environment. [Installation and first-workspace guide](docs/plugins.md).
+[Codex and Claude Code plugin installation](docs/plugins.md) · [Whole-slide pathology walkthrough](docs/pathology.md)
 
-## Try the workbench
+## Results
 
-Requires Python 3.10 or newer. Run these commands from the repository:
+These archived runs compare one operator with a reviewer and operator on the same images. F1 and Dice are image means against human annotations. The runs preceded the final side-by-side contour check.
 
-```sh
-python -m venv .venv
-# Activate .venv in your shell, then:
-python -m pip install -e .
-python -m sixth_magnitude demo --run runs/surface
-python -m sixth_magnitude serve --run runs/surface --port 8790
-```
+| Sesta on 40 images | Operator | Reviewer + operator |
+|---|---:|---:|
+| Instance F1 · 20 typed nuclear fields | .802 | .841 |
+| Typed instance F1 · same 20 | .389 | .408 |
+| Instance F1 · 10 multi-tissue fields | .579 | .624 |
+| Foreground Dice · 10 lung fields | .705 | .712 |
+| Summed batch time | 14.80 min | 16.61 min |
+| Total tokens, including cached input | 8.93M | 9.04M |
 
-Open **http://127.0.0.1:8790/**. The example creates a synthetic image, so you can try the controls without a dataset or model connection.
+[Four image comparisons, fixed baselines and full tables](docs/gallery/README.md) · [Download field-level scores](docs/gallery/fields.csv)
 
-1. Select or draw a region.
-2. Examine the region and its surroundings.
-3. Describe what is visible and save the observation.
-4. Check the saved overlay, then confirm that it matches.
-5. Export the results or reopen the workspace to continue.
+[Sol’s Hammer](https://github.com/chaosbeagle/sols-hammer) is the independent workbench for batched review with GPT-6.2 Sol Ultrafast. The two projects share image tools and scoring definitions.
 
-The sample workspace keeps its observations separate from reviewed results.
-
-## Work with an agent
-
-Load the [Sesta inspect skill](sixth_magnitude/skill/SKILL.md) in your agent environment. Give the agent the workspace path, viewer URL, and task. For example:
-
-> Inspect the marked surface for visible defects. Save each finding with a region and a short description. Check the saved overlays and leave uncertain findings for review.
-
-The skill describes how to inspect images, choose a useful scale, save findings, and resume work. The browser provides visual access; the local tools handle image processing and storage. Choose the model and reasoning effort in your agent environment. The workbench does not require a separate model API connection.
-
-```sh
-python -m sixth_magnitude prompt --run runs/surface
-python -m sixth_magnitude status --run runs/surface
-python -m sixth_magnitude export --run runs/surface
-```
-
-The plugin uses the same skill and workbench as the manual setup above.
-
-## Whole-slide inspection
-
-The general workbench can open native whole-slide images. An agent can inspect a slide through computer use, save regions, and return to the image with the annotations in place. The screenshots use this general workflow on public pathology images.
-
-![Whole-slide image in the inspection workbench](docs/images/wsi-overview.jpg)
-
-See the [pathology walkthrough](docs/pathology.md) for slide registration, detailed views, and measurement definitions. [Demo image sources and permissions](docs/demo-sources.md) accompany the screenshots. The observations shown illustrate use of the workbench and remain candidates for expert review.
-
-For lung pathology, a separate profile adds morphology fields, batch territories, and area measurements. Try its controls with a schematic example:
-
-```sh
-python -m sixth_magnitude demo --profile lung-pathology --run runs/pathology
-python -m sixth_magnitude serve --run runs/pathology --port 8791
-```
-
-## Use your own images
-
-Create a CSV following [examples/sources.csv](examples/sources.csv). Give each image a unique ID. Paths can be relative to the CSV or absolute on your machine.
-
-```csv
-asset_id,path,reader,mpp_x,mpp_y
-surface_a,../data/surface.png,raster,,
-```
-
-```sh
-python -m sixth_magnitude init --manifest examples/sources.csv --run runs/my-inspection
-python -m sixth_magnitude serve --run runs/my-inspection
-python -m sixth_magnitude export --run runs/my-inspection
-```
-
-PNG, JPEG, WebP, and BMP use the built-in reader. Native whole-slide formats use optional readers. Images without physical calibration use pixel coordinates; the lung pathology profile requires calibration.
-
-Keep images and working folders out of the public repository. Reopening the same folder resumes saved work. Initialization requires an empty folder. Moving an existing workspace to another machine requires its image sources to remain available at the registered paths.
-
-## Review and export
-
-Each observation keeps its source, geometry, image evidence, and review status together. Editing the description or region clears the previous visual confirmation and human acceptance. Reviewers can correct findings in the same workbench.
-
-Exports include JSON, CSV, Parquet, and image-coordinate GeoJSON. Candidate and accepted observations are separate. The workbench runs locally for one user; operator roles are selected in the interface.
-
-- [Architecture](docs/architecture.md)
-- [Workflow evaluation](docs/evaluation.md)
-- [Development checks](docs/validation.md)
-- [Contributing](CONTRIBUTING.md)
-
-## Data and intended use
-
-The workbench stores images and observations locally. When an agent uses a cloud model to inspect the workspace, screenshots and other content it sends are processed by that service under your account settings. Use images you are permitted to share with the selected service.
-
-The pathology examples support research and workflow development. Candidate observations need expert review before clinical use; the project has not been clinically validated. Keep the local server on the loopback address. Interface roles label actions and are not user authentication.
-
-Sesta Workbench is an independent project. Model and agent product names identify the systems discussed and do not imply vendor endorsement.
-
-## License
-
-Project code is licensed under [MIT](LICENSE.md), copyright © 2026 Kuan Ting Wu. Bundled browser components retain their [licenses and notices](THIRD_PARTY_NOTICES.md); slide imagery follows its [source-specific terms](docs/demo-sources.md).
+[Code license](LICENSE.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Image sources](docs/gallery/README.md#image-credits-and-terms)

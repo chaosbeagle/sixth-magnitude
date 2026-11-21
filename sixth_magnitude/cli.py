@@ -4,6 +4,7 @@ import csv
 import json
 from pathlib import Path
 import shutil
+import sys
 import tempfile
 import uuid
 from . import __version__, telemetry
@@ -37,7 +38,7 @@ def initialize(run,rows,profile='generic',purpose='annotation',model='gpt-6-astr
             s=case['source'];target=root/'assets'/(case['case_id']+Path(s['source']).suffix)
             shutil.copy2(s['source'],target)
             s['source']=str(target)
-    manifest={'run_id':root.name,'workspace_id':uuid.uuid4().hex,'framework':'Sixth Magnitude','version':__version__,
+    manifest={'run_id':root.name,'workspace_id':uuid.uuid4().hex,'framework':'Sesta Workbench','version':__version__,
         'created_utc':utc(),'profile':profile,'purpose':purpose,'task_mode':'slide_discovery',
         'coordinate_frame':'reader_level0_px','model_requested':model,'effort_requested':effort,
         'model_observed':None,'effort_observed':None,'cases':cases}
@@ -56,9 +57,23 @@ def manifest_rows(path):
     return rows
 
 def main(argv=None):
-    parser=argparse.ArgumentParser(prog='sixth-magnitude',description=__doc__)
+    if argv is None:
+        argv = sys.argv[1:]
+    parser=argparse.ArgumentParser(prog='sixth-magnitude',description=__doc__,
+        epilog='Use sixth-magnitude workbench --help to choose a nuclear review mode. The older hybrid command runs the single-operator workflow. The compose command is also available.')
     parser.add_argument('--version',action='version',version=__version__)
     sub=parser.add_subparsers(dest='command',required=True)
+    review = sub.add_parser('workbench', help='細胞核判讀 · 工具導引／模型導引／混合')
+    if argv and argv[0] == 'workbench':
+        try:
+            from pathology_tools import modes
+        except ModuleNotFoundError as exc:
+            if exc.name != 'pathology_tools':
+                raise
+            parser.error('Install packages/pathology-tools to use the nuclear workbench.')
+        modes.configure(review)
+    from . import toolbox
+    toolbox.arguments(sub)
     for name in ('demo','init'):
         p=sub.add_parser(name);p.add_argument('--run',required=True)
         p.add_argument('--profile',choices=['generic','lung-pathology'],default='generic')
@@ -76,7 +91,16 @@ def main(argv=None):
         p=sub.add_parser(name);p.add_argument('--profile',choices=['generic','lung-pathology'],default='generic')
     args=parser.parse_args(argv)
     try:
-        if args.command in ('schema','template'):
+        if args.command == 'workbench':
+            return modes.start(review, args, 'astra', True)
+        if args.command=='toolbox':
+            try:
+                result=toolbox.command(args)
+            except ModuleNotFoundError as exc:
+                if exc.name == 'pathology_tools':
+                    raise ValueError('Install packages/pathology-tools to use the optional toolbox') from exc
+                raise
+        elif args.command in ('schema','template'):
             contract=load(args.profile);result=contract.SCHEMA if args.command=='schema' else contract.defaults()
         elif args.command=='demo':
             from .demo import create_fixture

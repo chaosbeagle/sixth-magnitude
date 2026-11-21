@@ -1,0 +1,5 @@
+workbench,roles,summed_batch_seconds,total_tokens,cached_input_tokens,uncached_input_tokens,output_tokens,reasoning_output_tokens
+Sesta Workbench,operator,887.9335922924802,8931791,8405504,504201,22086,892
+Sesta Workbench,reviewer_operator,996.3550986694172,9036318,8178816,828032,29470,1454
+Sol’s Hammer,operator,1806.5966090019792,23435023,21742848,1517795,174380,73368
+Sol’s Hammer,reviewer_operator,1891.8168056234717,27718646,25358592,2173298,186756,85116

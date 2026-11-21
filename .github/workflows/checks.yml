@@ -11,13 +11,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - name: Check out the Sol host for paired integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: chaosbeagle/sols-hammer
+          ref: 7d7aae8c8274806a9d07a80b8216b0b155acd956
+          path: .ci-sol
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: python -m pip install ".[test]"
+      - run: python -m pip install "./packages/pathology-tools" "./.ci-sol" ".[test]" scikit-learn
       - run: python -m pytest -q
       - run: python scripts/check_plugin.py
       - run: node --check sixth_magnitude/ui/inspect.js

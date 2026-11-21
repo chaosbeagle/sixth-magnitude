@@ -29,11 +29,27 @@ The plugin supplies guidance and the workbench, not a browser driver or a model 
 
 Reload for reconnection or an actual discrepancy, rather than after every region. Export at the end of a work block. Use AI mode for model observations and a test role and workspace for demonstrations. Human decisions must come from the actual reviewer; locally selected roles do not authenticate identity.
 
+## Inspect H&E nucleus candidates
+
+For nuclear segmentation and typing in Sesta Workbench or Sol's Hammer, use the user's chosen mode. If the user wants to choose, or starts a new nuclear workbench session without a mode or an established preference, present these three choices in chat before running inference. Use selectable options when the host offers them. All three include visual inspection, counting and cell typing.
+
+- Tool-guided review lets the model select and compose tool-generated contours.
+- Model-guided review starts from the source image and a blank mask. The model can draw or write image-processing code.
+- Hybrid review starts a separate visual reviewer for this run. It compares the raw image and tool contours, selects a tool mask or blank canvas per field, and records why. The operator can combine or change routes using local evidence.
+
+In hybrid nuclear review, inspect the full-field raw image, reviewer start and proposed final side by side. Use the comparison code from the full view, or call `compare` for a fresh view and optional ROI. Seal with `geometry` set to `start` or `final` and assign types to the IDs in that column. Check ambiguous cells on the clean source in local tissue context.
+
+Pass the choice with `--mode` to `sixth-magnitude workbench` or `sols-hammer workbench`, together with `--fields` and `--output`. Install the shared tools and prepare fields as shown in the repository README.
+
+For the older nucleus toolbox workflow, prepare a level-zero ROI with `sixth-magnitude toolbox prepare`. Supply `--reference-image` when the aligned native slide or a known canonical raster is available. Inspect the fields with `sixth-magnitude toolbox inspect`. Read the field status alongside the returned mask. An unresolved field retains a provisional baseline. Class changes require a separate confirmation on the individual clean crop. The standalone Sol's Hammer workbench uses its own batched triage policy. Illustrated comparisons and scoring definitions are in `docs/gallery/README.md`.
+
 ## Choose the profile
 
 The general profile supports two-dimensional observations in pixels or calibrated units. Do not infer physical units from an uncalibrated screenshot. Inspecting selected regions does not establish whole-image coverage.
 
 For `lung-pathology`, the root page supports territory batches and `/review` opens detailed observations. Batch visibly homogeneous areas, magnify mixed areas, and retain unresolved regions. Let the program calculate measurements. Report percentages and sampling rectangles cannot substitute for observed tumour territories.
+
+For a lung region, survey the entire field for a supported growth pattern before proposing foreground. Revisit its borders in native-resolution crops alongside neighboring tissue. Check for a correctly empty field, then judge the extent and dominant pattern separately.
 
 Territory codes: `T` tumour envelope; `L/A/P/M/S/C` lepidic/acinar/papillary/micropapillary/solid/complex glandular; `?` unresolved; `X` excluded; `B` unassessable boundary. Declare whole-section coverage only after inspecting all relevant tissue. Dictionary applicability, typing coverage, and boundary assessability are separate decisions. Incomplete evidence can leave measurements unavailable.
 
